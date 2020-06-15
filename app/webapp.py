@@ -3,6 +3,8 @@ from flask import redirect
 from flask import render_template
 from flask import request
 from flask import url_for
+from flask import request
+from flask import session
 from flask_login import current_user
 from flask_login import login_required
 from flask_login import login_user
@@ -14,12 +16,27 @@ from app.forms import LoginForm
 from app.forms import RegistrationForm
 from app.models import User
 
+
 server_bp = Blueprint('main', __name__)
 
 
-@server_bp.route('/')
+@server_bp.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template("index.html", title='Home Page')
+    rqst = dict(request.headers)
+    print(rqst)
+    names = ["Luke", "Matt"]
+    systems = ["Bleed", "Fuel"]
+    return render_template("index.html", title='Home Page', name_list = names, system_list = systems)
+
+@server_bp.route('/handle_data', methods=['POST'])
+def handle_data():
+    global dropdown
+    rqst = dict(request.form)
+    print(rqst)
+    session['username'] = rqst['username']
+    session['subsystem'] = rqst['subsystem']
+    session['admin'] = rqst['admin']
+    return redirect('/dashboard/')
 
 
 @server_bp.route('/login/', methods=['GET', 'POST'])

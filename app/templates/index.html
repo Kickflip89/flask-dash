@@ -6,4 +6,43 @@
 {% else  %}
   <h1>Hi, {{ current_user.username }}!</h1>
 {% endif %}
+<div>
+  <div>
+    <h2>Choose User:</h2>
+        <h3><table><form method="POST" action="{{ url_for('main.handle_data') }}"">
+          <td>
+          <label>Username:</label>
+            <select name="username" width="300px">
+              {% for o in name_list %}
+                <option name="{{ o }}" selected>{{ o }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td>
+            <label>Subsystem:</label>
+            <select name="subsystem" width="300px">
+                {% for o in system_list %}
+                <option name="{{ o }}">{{o}}</option>
+                {% endfor %}
+            </select></td>
+            <td>
+            <label>Admin:</label>
+            <select name="admin" width="300px">
+                <option name="yes" selected>Yes</option>
+                <option name="no" selected>No</option>
+            </select>
+            </td>
+            <td>
+              <input type="submit" value="Add Permissions">
+            </td>
+        </form></table></h3>
+    </div>
+    <div>
+        <h2>Add User:</h2>
+        <h3><form method="POST" action="">
+            <input type="text" name="username">
+            <button>Add User</button>
+        </form></h3>
+    </div>
+</div>
 {% endblock %}
